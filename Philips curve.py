@@ -15,11 +15,16 @@ def philipC(NatUnEm,Ex_inflation,alpha=False):
         sys.exit("Error: You have to provide an alpha value")
     #UnEm1 = NatUnEm - alpha*(Ex_inflation + ((UnEm-NatUnEm)/alpha)-Ex_inflation) 
     #My rather bad math tells me that unemployment must be given by 
+    #solution = return the value og inflation, when unem = 0 and the value of unem when inflation = 0 
     UnEm = NatUnEm - ((-alpha*Ex_inflation)-Ex_inflation)/2
    # NatUnEm1 = UnEm + alpha*(Inflation-Ex_inflation)
     Inflation = Ex_inflation + (NatUnEm -(((-alpha*Ex_inflation)-Ex_inflation)/2)-NatUnEm)/alpha
     #Ex_inflation1 = (UnEm-NatUnEm)/alpha - Inflation
-    return(Inflation,UnEm)
+    UnEm1 = (NatUnEm-1) - (((-alpha)*(Ex_inflation-1))-(Ex_inflation)-1)/2
+    Inflation1 = (Ex_inflation-1) + ((NatUnEm-1) -((((-alpha)*(Ex_inflation-1))-(Ex_inflation-1))/2)-(NatUnEm-1))/(alpha)
+
+    return(Inflation,UnEm,Inflation1,UnEm1)
+
 
 
 def plotting (x,y):
@@ -27,17 +32,21 @@ def plotting (x,y):
     plt.plot(x,y)
     plt.xlabel("Unemployment")
     plt.ylabel("Inflation")
+    plt.xlim(0,(int(x[0])+4))
+    plt.ylim(0,(int(y[1])+4))
     plt.show()
 
-def philipsPlot (x,clear=false):
+def philipsPlot (x,clear=False):
     if type(x)== list or type(x) == tuple:
-        Inflation = list(0,x[0])
-        Unemployment = list(x[1],0)
+        Inflation = list([x[2],x[0]])
+        Unemployment = list([x[3],x[1]])
     else: sys.exit("Error: The input is not a list or a tuple")
     if clear == False: 
-        plotting(Inflation,Unemployment)
+        plotting(Unemployment,Inflation)
     else:
         plt.clf()
-        plotting(Inflation, Unemployment)
+        plt.close()
+        plotting(Unemployment,Inflation)
 
 x = philipC(NatUnEm=2,Ex_inflation=4,alpha=0.3)
+philipsPlot(x=x,clear=True)
