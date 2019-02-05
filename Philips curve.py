@@ -19,19 +19,25 @@ def philipC(NatUnEm,Ex_inflation,alpha=False):
    # NatUnEm1 = UnEm + alpha*(Inflation-Ex_inflation)
     Inflation = Ex_inflation + (NatUnEm -(((-alpha*Ex_inflation)-Ex_inflation)/2)-NatUnEm)/alpha
     #Ex_inflation1 = (UnEm-NatUnEm)/alpha - Inflation
-   
-    all_vars = list([UnEm, Inflation])
     return(Inflation,UnEm)
 
+
+def plotting (x,y):
+    #I am defining a function that i use in the "phillipsplot function"
+    plt.plot(x,y)
+    plt.xlabel("Unemployment")
+    plt.ylabel("Inflation")
+    plt.show()
+
+def philipsPlot (x,clear=false):
+    if type(x)== list or type(x) == tuple:
+        Inflation = list(0,x[0])
+        Unemployment = list(x[1],0)
+    else: sys.exit("Error: The input is not a list or a tuple")
+    if clear == False: 
+        plotting(Inflation,Unemployment)
+    else:
+        plt.clf()
+        plotting(Inflation, Unemployment)
+
 x = philipC(NatUnEm=2,Ex_inflation=4,alpha=0.3)
-inflation = x[0]
-Unemployment = x[1]
-Natural_Unemployment = x[2]
-Expectet_Inflation = x[3]
-
-x = list([0,inflation])
-y = list([Unemployment,0])
-
-plt.scatter(y,x)
-plt.show()
-print(inflation,Unemployment)
