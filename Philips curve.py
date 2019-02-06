@@ -34,6 +34,17 @@ def philipC(NatUnEm,Ex_inflation,alpha=False):
 def plotting (x,y):
     #I am defining a function that i use in the "phillipsplot function"
     plt.plot(x,y)
+    fig, sli = plt.subplots()
+    plt.subplots_adjust(left=0.25,bottom=0.25)
+    test = plt.axes([0.25,0.1,0.65,0.03],facecolor="lightgoldenrodyellow")
+    uEx_inflation = wig.Slider(test, label="Expected inflation",valmin=0.0,valmax=10,valinit=2,valstep=0.5)
+    uEx_inflation.on_changed(update)
+     #trying to make a slider where expected infation can be chosen
+    #go here for mere info https://matplotlib.org/gallery/widgets/slider_demo.html
+    #test = plt.axes([0.25,0.1,0.65,0.03],facecolor="lightgoldenrodyellow")
+    #next i need to assign the new expected inflation rate to the values of inflation and unemployment, and plot these
+    #but first i need to make a funtional plot
+    
     plt.xlabel("Unemployment")
     plt.ylabel("Inflation")
     plt.xlim(0,(int(x[0])+1))
@@ -50,10 +61,6 @@ def philipsPlot (x,clear=False):
         Unemployment = list([x[1],0.2])
         Ex_inflation = x[2]
     else: sys.exit("Error: The input is not a list or a tuple")
-    #trying to make a slider where expected infation can be chosen
-    test = plt.axes([0.25,0.1,0.65,0.03],facecolor="lightgoldenrodyellow")
-    uEx_inflation = wig.Slider(test, label="Expected inflation",valmin=0.0,valmax=10,valinit=2,valstep=0.5)
-    uEx_inflation.on_changed(update)
     if clear == False: 
         plotting(Unemployment,Inflation)
     else:
