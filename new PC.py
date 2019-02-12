@@ -26,4 +26,5 @@ def PCplot(NatUnEm,Ex_inflation,alpha=0):
     plt.ylim(0,8)
 
 %matplotlib inline
-interact(PCplot,Ex_inflation = 2,NatUnEm = 2, alpha = 2)
+exi_slider = widgets.IntSlider(min=0,max=10,value=2,step=0.5)
+interact(PCplot, Ex_inflation =  widgets.FloatSlider(min=0,max=5,value=2,step=0.2) ,NatUnEm = 2, alpha = 2)
