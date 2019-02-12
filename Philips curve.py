@@ -8,7 +8,11 @@
 import numpy as np
 import sys
 import matplotlib.pyplot as plt
-from matplotlib.widgets import Slider
+#from matplotlib.widgets import Slider
+import matplotlib.widgets as wig
+from __future__ import print_function
+from ipywidgets import interact, interactive, fixed, interact_manual
+import ipywidgets as widgets
 
 #edit it need to take only natural unemployment, expected inflation and alpha as input, and output Inflation and unemployment
 def philipC(NatUnEm,Ex_inflation,alpha=False):
@@ -17,10 +21,10 @@ def philipC(NatUnEm,Ex_inflation,alpha=False):
     #UnEm1 = NatUnEm - alpha*(Ex_inflation + ((UnEm-NatUnEm)/alpha)-Ex_inflation) 
     #My rather bad math tells me that unemployment must be given by 
     #solution = return the value og inflation, when unem = 0 and the value of unem when inflation = 0 
-    Inflation = 0.5
+    Inflation = 0.2
     UnEm = NatUnEm + (Ex_inflation - Inflation)/alpha
    # NatUnEm1 = UnEm + alpha*(Inflation-Ex_inflation)
-    Unemployment = 0.5
+    Unemployment = 0.2
     Inflation = Ex_inflation - alpha*(Unemployment - NatUnEm)
     #Ex_inflation1 = (UnEm-NatUnEm)/alpha - Inflation
        #Delete this
@@ -34,11 +38,11 @@ def philipC(NatUnEm,Ex_inflation,alpha=False):
 def plotting (x,y):
     #I am defining a function that i use in the "phillipsplot function"
     plt.plot(x,y)
-    fig, sli = plt.subplots()
-    plt.subplots_adjust(left=0.25,bottom=0.25)
-    test = plt.axes([0.25,0.1,0.65,0.03],facecolor="lightgoldenrodyellow")
-    uEx_inflation = wig.Slider(test, label="Expected inflation",valmin=0.0,valmax=10,valinit=2,valstep=0.5)
-    uEx_inflation.on_changed(update)
+    #fig, sli = plt.subplots()
+   # plt.subplots_adjust(left=0.25,bottom=0.25)
+    #test = plt.axes([0.25,0.1,0.65,0.03],facecolor="lightgoldenrodyellow")
+    #Ex_inflation = wig.Slider(test, label="Expected inflation",valmin=0.0,valmax=10,valinit=2,valstep=0.5)
+    #uEx_inflation.on_changed(update)
      #trying to make a slider where expected infation can be chosen
     #go here for mere info https://matplotlib.org/gallery/widgets/slider_demo.html
     #test = plt.axes([0.25,0.1,0.65,0.03],facecolor="lightgoldenrodyellow")
@@ -59,7 +63,7 @@ def philipsPlot (x,clear=False):
     if type(x)== list or type(x) == tuple:
         Inflation = list([0.2,x[0]])
         Unemployment = list([x[1],0.2])
-        Ex_inflation = x[2]
+        Ex_inflation = list(x[2])
     else: sys.exit("Error: The input is not a list or a tuple")
     if clear == False: 
         plotting(Unemployment,Inflation)
@@ -67,9 +71,8 @@ def philipsPlot (x,clear=False):
         plt.clf()
         plt.close()
         plotting(Unemployment,Inflation)
-
+    
 x = philipC(NatUnEm=2,Ex_inflation=4,alpha=0.3)
 
 philipsPlot(x=x, clear=False)
-
 
